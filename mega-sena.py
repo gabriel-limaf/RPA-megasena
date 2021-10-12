@@ -113,19 +113,36 @@ def numero_sorteado(conc):
 
 
 def conferir_numeros(num, conc):
-    contador = 0
-    num = num.replace(' ', '')
+    posicx = 0
+    posicy = 2
+    y = ''
+    index = 0
+    teste = '123456'
+    while index < len(teste):
+        a = num[posicx:posicy]
+        posicx = posicx + 2
+        posicy = posicy + 2
+        index = index + 1
+        y = y + a + ', '
+    y = y[0:22]
+    y = y.split(', ')
+    # print(y)
     with open(conc + 'numeros_python.txt', "r") as arquivo:
         file = arquivo.readlines()
-        for meus_numeros in file:
-            x = meus_numeros.replace(', ', '')
-            print('Você jogou o número: ' + x, end='')
-            contador = contador + 1
-            if num in x:
-                print(f'VOCE É UM GANHADOR DA MEGASENA !! Acertou na linha {contador}\n')
-                break
-            else:
-                print('Infelizmente não foi desta vez !\n')
+        n_linhas = len(file)
+        print(f'Há {n_linhas} jogos')
+        for numero in file:
+            a = numero.split(', ')
+            a[-1] = a[-1].strip()
+            comum = len(set(y).intersection(a))
+            if comum == 6:
+                print(f' Seus números: {a} + Você acertou: {comum} números !! PARABENS, VOCE GANHOU NA MEGASENA')
+            if comum == 5:
+                print(f' Seus números: {a} + Você acertou: {comum} números !! PARABENS, VOCE GANHOU NA QUINA')
+            if comum == 4:
+                print(f' Seus números: {a} + Você acertou: {comum} números !! PARABENS, VOCE GANHOU NA QUADRA')
+            if comum < 4:
+                print(f' Seus números: {a} + Você acertou: {comum} números')
 
 
 def jogar():
